@@ -49,6 +49,16 @@
     {{ } -}}
 
     <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="CommonAppDataFolder">
+        <Directory Id="CommonAppDataProduct" Name="${productName}">
+          <Component Id="CreateproductNameFolder" Guid="9B159E1A-10D7-4D99-8FB6-60A0EBD0062F" KeyPath="yes">
+            <CreateFolder>
+              <Permission  User="Administrators" GenericAll="yes" />
+              <Permission  User="Users" GenericAll="yes" />
+            </CreateFolder>
+          </Component>
+        </Directory>
+      </Directory>
       <Directory Id="${programFilesId}">
         {{ if (menuCategory) { }}
           <Directory Id="COMPANYDIR" Name="${menuCategory}">
@@ -75,6 +85,9 @@
       <ComponentGroupRef Id="ProductComponents"/>
     </Feature>
 
+    <Feature Id="AppDataProductFolder" Title="AppDataProductFolder">
+      <ComponentRef Id="CreateproductNameFolder"/>
+    </Feature>
     {{-dirs}}
 
     <ComponentGroup Id="ProductComponents" Directory="APPLICATIONFOLDER">
